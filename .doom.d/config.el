@@ -6,7 +6,7 @@
 (when IS-MAC
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
-(setq doom-font (font-spec :family "Dank Mono" :size 13))
+(setq doom-font (font-spec :family "Dank Mono" :size 14))
 (setq doom-theme 'doom-nord)
 
 (after! doom-modeline
