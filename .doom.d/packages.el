@@ -9,7 +9,6 @@
 (package! flycheck-flow)
 
 (package! org-journal)
-(package! deft)
 (package! org-roam :recipe
   (:host github
    :repo "jethrokuan/org-roam"
