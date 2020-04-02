@@ -71,36 +71,7 @@
 
 (global-set-key (kbd "M-g b") 'git-blame-line)
 
-(def-package! company-emoji)
-(after! company
-  (add-to-list 'company-backends 'company-emoji))
-
 ;; Web
-(def-package! company-flow
-  :when (featurep! :completion company)
-  :config
-  (set-company-backend! 'rjsx-mode 'company-flow 'company-files))
-
-(def-package! flow-minor-mode
-  :after flycheck
-  :hook ((js2-mode . flow-minor-mode)
-         (rjsx-mode . flow-minor-mode)))
-
-(def-package! flycheck-flow
-  :config
-  (defun flycheck-flow--predicate ()
-    "Shall we run the checker?"
-    (and
-     buffer-file-name
-     (file-exists-p buffer-file-name)
-     (locate-dominating-file buffer-file-name ".flowconfig"))))
-
-(def-package! prettier-js
-  :hook ((js2-mode . prettier-js-mode)
-         (rjsx-mode . prettier-js-mode)
-         (css-mode . prettier-js-mode)
-         (web-mode . prettier-js-mode)))
-
 (after! lsp-clients
   :config
   (defun lsp-clients-flow-activate-p (file-name _mode)
@@ -110,56 +81,21 @@ particular FILE-NAME and MODE."
        (lsp-clients-flow-project-p file-name))))
 
 ;; org-mode
-(setq org-directory "~/.org/")
-(setq yishus/org-agenda-directory "~/.org/gtd/")
-(setq org-agenda-files (directory-files-recursively yishus/org-agenda-directory "\.org$"))
-
-(after! org
-  (setq org-capture-templates
-        `(("i" "inbox" entry (file ,(concat yishus/org-agenda-directory "inbox.org"))
-           "* TODO %?"))))
+(setq org-directory "~/Documents/org/")
 
 (def-package! org-journal
   :custom
   (org-journal-dir org-directory)
-  (org-journal-file-format "%Y%m%d.org"))
+  (org-journal-file-format "private-%Y%m%d.org"))
 
 (def-package! deft
   :custom
   (deft-directory org-directory)
   (deft-default-extension "org")
   (deft-use-filter-string-for-filename t)
+  (deft-extensions '("org"))
   :config
   (setq deft-file-naming-rules
       '((noslash . "-")
         (nospace . "-")
         (case-fn . downcase))))
-
-(setq yishus/org-agenda-todo-view
-      `("d" "Daily Agenda"
-        ((agenda ""
-                 ((org-agenda-span 'day)
-                  (org-deadline-warning-days 365)))
-         (todo "TODO"
-               ((org-agenda-overriding-header "One-off Tasks")
-                (org-agenda-files '(,(concat yishus/org-agenda-directory "next.org")))
-                (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
-         (todo "TODO"
-               ((org-agenda-overriding-header "To Refile")
-                (org-agenda-files '(,(concat yishus/org-agenda-directory "inbox.org")))))
-         nil)))
-
-(after! org-agenda
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-agenda-block-separator nil)
-  (setq org-agenda-start-on-weekday nil)
-  (setq org-agenda-start-day nil)
-  (add-to-list 'org-agenda-custom-commands `,yishus/org-agenda-todo-view))
-
-(def-package! org-roam
-  :custom
-  (org-roam-directory org-directory)
-  :hook (org-mode . org-roam-mode))
-(map! :map org-roam-mode-map
-      (:prefix "C-c"
-        :desc "Insert Org Roam" "n i" 'org-roam-insert))
