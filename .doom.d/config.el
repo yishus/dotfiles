@@ -8,7 +8,7 @@
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
 (setq doom-font (font-spec :family "Dank Mono" :size 14))
-(setq doom-theme 'doom-laserwave)
+(setq doom-theme 'custom-doom-gruvbox)
 
 (set-fontset-font "fontset-default"
                     '(#x1F600 . #x1F64F)
