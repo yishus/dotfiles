@@ -4,7 +4,9 @@
 
 ;;; When starting up, maximize the window
 (when IS-MAC
-  (map! :iv "s-x" #'kill-region)
+  (map! :iv "s-x" #'kill-region
+        :n [s-up] #'beginning-of-buffer
+        :n [s-down] #'end-of-buffer)
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
 (setq doom-font (font-spec :family "Dank Mono" :size 14))
@@ -43,17 +45,25 @@
 
 (after! org-journal
   :custom
-  (org-journal-dir org-directory)
-  (org-journal-file-format "private-%Y%m%d.org"))
+  (setq org-journal-dir org-directory)
+  (setq org-journal-file-format "private-%Y-%m-%d.org"))
 
 (after! deft
-  :custom
-  (deft-directory org-directory)
-  (deft-default-extension "org")
-  (deft-use-filter-string-for-filename t)
-  (deft-extensions '("org"))
   :config
+  (setq deft-directory org-directory)
+  (setq deft-default-extension "org")
+  (setq deft-use-filter-string-for-filename t)
+  (setq deft-extensions '("org"))
   (setq deft-file-naming-rules
       '((noslash . "-")
         (nospace . "-")
         (case-fn . downcase))))
+
+(after! org-roam
+  :config
+  (setq org-roam-dailies-capture-templates
+        '(("d" "daily" plain (function org-roam-capture--get-point)
+           ""
+           :immediate-finish t
+           :file-name "private-%<%Y-%m-%d>"
+           :head "#+TITLE: %<%Y-%m-%d>"))))
