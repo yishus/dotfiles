@@ -9,8 +9,9 @@
         :n [s-down] #'end-of-buffer)
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
-(setq doom-font (font-spec :family "Dank Mono" :size 14))
-(setq doom-theme 'custom-doom-gruvbox)
+(setq doom-font (font-spec :family "Fira Code" :size 13))
+;; (setq doom-theme 'custom-doom-gruvbox)
+(setq doom-theme 'doom-moonlight)
 
 (set-fontset-font "fontset-default"
                     '(#x1F600 . #x1F64F)
@@ -24,12 +25,9 @@
 
 (setq neo-window-fixed-size nil)
 
-(use-package! fish-completion
-  :config
-  (global-fish-completion-mode))
-
 (when (featurep! :tools lsp)
-  (setq +lsp-company-backend 'company-capf))
+  ;; (setq +lsp-company-backend 'company-capf)
+  (setq lsp-enable-file-watchers nil))
 
 ;; Web
 (after! lsp-clients
@@ -39,6 +37,9 @@
   particular FILE-NAME and MODE."
   (and (derived-mode-p 'js-mode 'web-mode 'js2-mode 'flow-js2-mode 'rjsx-mode)
        (lsp-clients-flow-project-p file-name))))
+
+(after! web-mode
+  (setq web-mode-markup-indent-offset 2))
 
 ;; org-mode
 (setq org-directory "~/Documents/org/")
@@ -61,9 +62,15 @@
 
 (after! org-roam
   :config
+  (setq org-roam-directory org-directory)
+  (setq org-roam-db-location (concat org-directory "org-roam.db"))
   (setq org-roam-dailies-capture-templates
         '(("d" "daily" plain (function org-roam-capture--get-point)
            ""
            :immediate-finish t
            :file-name "private-%<%Y-%m-%d>"
            :head "#+TITLE: %<%Y-%m-%d>"))))
+
+(use-package! shadowenv
+  :hook
+  (after-init . shadowenv-global-mode))
