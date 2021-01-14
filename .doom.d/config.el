@@ -42,12 +42,7 @@
   (setq web-mode-markup-indent-offset 2))
 
 ;; org-mode
-(setq org-directory "~/Documents/org/")
-
-(after! org-journal
-  :custom
-  (setq org-journal-dir org-directory)
-  (setq org-journal-file-format "private-%Y-%m-%d.org"))
+(setq org-directory "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/")
 
 (after! deft
   :config
