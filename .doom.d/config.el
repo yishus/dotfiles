@@ -13,36 +13,24 @@
 ;; (setq doom-theme 'custom-doom-gruvbox)
 (setq doom-theme 'doom-moonlight)
 
-(set-fontset-font "fontset-default"
-                    '(#x1F600 . #x1F64F)
-                    (font-spec :name "Apple Color Emoji") nil 'prepend)
-
-(after! doom-modeline
-  (setq doom-modeline-vcs-max-length 20))
-
-(after! doom-themes
-  (setq doom-themes-neotree-enable-variable-pitch nil))
-
-(setq neo-window-fixed-size nil)
+;; (after! doom-modeline
+;;   (setq doom-modeline-vcs-max-length 20))
 
 (when (featurep! :tools lsp)
-  ;; (setq +lsp-company-backend 'company-capf)
   (setq lsp-enable-file-watchers nil))
 
-;; Web
-(after! lsp-clients
-  :config
-  (defun lsp-clients-flow-activate-p (file-name _mode)
-  "Checks if the Flow language server should be enabled for a
-  particular FILE-NAME and MODE."
-  (and (derived-mode-p 'js-mode 'web-mode 'js2-mode 'flow-js2-mode 'rjsx-mode)
-       (lsp-clients-flow-project-p file-name))))
-
-(after! web-mode
-  (setq web-mode-markup-indent-offset 2))
-
 ;; org-mode
-(setq org-directory "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/")
+(setq org-directory "~/.org/")
+
+(defun buffer-face-writing ()
+  (interactive)
+  (setq buffer-face-mode-face '(:background "white" :family "SF Pro"))
+  (buffer-face-mode))
+
+;; (add-hook! org-mode #'buffer-face-writing)
+
+(after! org
+  (setq org-agenda-files (list org-directory)))
 
 (after! deft
   :config
@@ -58,7 +46,7 @@
 (after! org-roam
   :config
   (setq org-roam-directory org-directory)
-  (setq org-roam-db-location (concat org-directory "org-roam.db"))
+  (setq org-roam-db-location "~/Documents/org/org-roam.db")
   (setq org-roam-dailies-capture-templates
         '(("d" "daily" plain (function org-roam-capture--get-point)
            ""
