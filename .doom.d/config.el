@@ -9,51 +9,40 @@
         :n [s-down] #'end-of-buffer)
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
-(setq doom-font (font-spec :family "Fira Code" :size 13))
-;; (setq doom-theme 'custom-doom-gruvbox)
-(setq doom-theme 'doom-moonlight)
-
-;; (after! doom-modeline
-;;   (setq doom-modeline-vcs-max-length 20))
+(setq doom-font (font-spec :family "iA Writer Mono S" :size 13 :weight 'bold))
+(setq doom-theme 'doom-oceanic-next)
 
 (when (featurep! :tools lsp)
   (setq lsp-enable-file-watchers nil))
 
+;; (after! magit
+;;   :config
+;;   (remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
+;;   (remove-hook 'magit-status-sections-hook 'magit-insert-status-headers)
+;;   (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-pushremote)
+;;   (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-pushremote)
+;;   (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
+;;   (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent))
+
 ;; org-mode
 (setq org-directory "~/.org/")
 
-(defun buffer-face-writing ()
-  (interactive)
-  (setq buffer-face-mode-face '(:background "white" :family "SF Pro"))
-  (buffer-face-mode))
-
-;; (add-hook! org-mode #'buffer-face-writing)
-
 (after! org
-  (setq org-agenda-files (list org-directory)))
+  :config
+  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+  (setq org-log-done 'time))
 
 (after! deft
   :config
-  (setq deft-directory org-directory)
-  (setq deft-default-extension "org")
-  (setq deft-use-filter-string-for-filename t)
-  (setq deft-extensions '("org"))
-  (setq deft-file-naming-rules
-      '((noslash . "-")
-        (nospace . "-")
-        (case-fn . downcase))))
+  (setq deft-directory org-directory))
 
 (after! org-roam
   :config
   (setq org-roam-directory org-directory)
-  (setq org-roam-db-location "~/Documents/org/org-roam.db")
-  (setq org-roam-dailies-capture-templates
-        '(("d" "daily" plain (function org-roam-capture--get-point)
-           ""
-           :immediate-finish t
-           :file-name "private-%<%Y-%m-%d>"
-           :head "#+TITLE: %<%Y-%m-%d>"))))
+  (setq org-roam-db-location "~/org/org-roam.db"))
 
 (use-package! shadowenv
   :hook
   (after-init . shadowenv-global-mode))
+
+;; (use-package! spin)
