@@ -9,8 +9,8 @@
         :n [s-down] #'end-of-buffer)
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
-(setq doom-font (font-spec :family "iA Writer Mono S" :size 13 :weight 'bold))
-(setq doom-theme 'doom-oceanic-next)
+(setq doom-font (font-spec :family "iA Writer Mono S" :size 14))
+(setq doom-theme 'doom-flatwhite)
 
 (when (featurep! :tools lsp)
   (setq lsp-enable-file-watchers nil))
@@ -45,4 +45,4 @@
   :hook
   (after-init . shadowenv-global-mode))
 
-;; (use-package! spin)
+(use-package! spin)

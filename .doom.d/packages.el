@@ -3,3 +3,5 @@
 
 (package! shadowenv)
 (package! graphql-mode)
+(package! spin
+  :recipe (:host github :repo "shopify/spin.el"))
