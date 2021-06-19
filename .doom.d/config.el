@@ -70,7 +70,7 @@
   :config
   (setq deft-directory org-directory))
 
-(use-package! org-roam
+(after! org-roam
   :init
   (setq org-roam-directory yishus/org-roam-directory)
   (setq org-roam-db-location "~/Documents/org/org-roam.db"))
