@@ -11,7 +11,7 @@
         :n [s-down] #'end-of-buffer)
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
-(setq doom-theme 'doom-ayu-mirage)
+(setq doom-theme 'doom-flatwhite)
 (setq org-directory (file-truename "~/.org/"))
 (setq display-line-numbers-type t)
 
