@@ -5,6 +5,8 @@ THISDIR="${0:a:h}"
 DOTVIM="${HOME}/.vim"
 vimrc="${HOME}/.vimrc"
 
+git -C "$THISDIR" submodule update --init
+
 mkdir -p $DOTVIM
 
 if [ ! -L $vimrc ] && [ ! -f $vimrc ]
