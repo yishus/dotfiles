@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# References https://github.com/shioyama/dotfiles/blob/master/modules/040-vim/install.sh
 
 THISDIR="${0:a:h}"
 DOTVIM="${HOME}/.vim"
