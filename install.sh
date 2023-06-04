@@ -1,22 +1,14 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 # References https://github.com/shioyama/dotfiles/blob/master/modules/040-vim/install.sh
 
-THISDIR="${0:a:h}"
-DOTVIM="${HOME}/.vim"
-vimrc="${HOME}/.vimrc"
+SCRIPTPATH="${0:a:h}"
 
-git -C "$THISDIR" submodule update --init
+echo "== Update git submodules =="
+git -C "$SCRIPTPATH" submodule update --init
 
-mkdir -p $DOTVIM
+echo "== Install packages =="
 
-if [ ! -L $vimrc ] && [ ! -f $vimrc ]
-then
-  ln -s "$THISDIR"/.vimrc $vimrc
+if [ $SPIN ]; then
+  sudo apt install -y ripgrep
+  sudo apt install -y neovim
 fi
-
-PLUGGED="${DOTVIM}/plugged"
-AUTOLOAD="${DOTVIM}/autoload"
-
-mkdir -p "${PLUGGED}" "${AUTOLOAD}"
-
-ln -s "$THISDIR"/submodules/vim-plug/plug.vim "$AUTOLOAD"
