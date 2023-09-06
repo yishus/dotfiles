@@ -11,7 +11,7 @@
         :n [s-down] #'end-of-buffer)
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
-(setq doom-theme 'doom-flatwhite)
+(setq doom-theme 'doom-ayu-mirage)
 (setq org-directory (file-truename "~/.org/"))
 (setq display-line-numbers-type t)
 
@@ -20,15 +20,12 @@
   (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
   (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil))
 
-(setq yishus/org-agenda-directory (file-truename "~/.org/gtd/"))
-(setq yishus/org-roam-directory (file-truename "~/.org/braindump/"))
-
 (after! lsp-mode
   :config
   (setq lsp-clients-typescript-server-args '("--stdio" "--tsserver-log-file" "/dev/stderr")))
 
 (after! org
-  (setq org-agenda-files (directory-files-recursively yishus/org-agenda-directory "\\.org$"))
+  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (setq org-capture-templates
         '(("p" "Protocol captures")
           ("pt" "Protocol todo" entry
@@ -52,19 +49,19 @@
                                                 (org-deadline-warning-days 365)))
                                        (todo "NEXT"
                                              ((org-agenda-overriding-header "Next actions")
-                                              (org-agenda-files '(,(expand-file-name "inbox.org" yishus/org-agenda-directory)))
+                                              (org-agenda-files '(,(expand-file-name "inbox.org" org-directory)))
                                               (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
                                        (todo "NEXT"
                                              ((org-agenda-overriding-header "Reading list")
-                                              (org-agenda-files '(,(expand-file-name "private_reading_inbox.org" org-roam-directory))))))))))
+                                              (org-agenda-files '(,(expand-file-name "private_reading_inbox.org" org-directory))))))))))
 
 (after! deft
   :config
-  (setq deft-directory yishus/org-roam-directory))
+  (setq deft-directory org-directory))
 
 (after! org-roam
   :init
-  (setq org-roam-directory yishus/org-roam-directory)
+  (setq org-roam-directory org-directory)
   (setq org-roam-db-location "~/Documents/org/org-roam.db"))
 
 (use-package! apheleia
