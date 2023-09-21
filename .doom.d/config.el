@@ -27,13 +27,8 @@
 (after! org
   (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (setq org-capture-templates
-        '(("p" "Protocol captures")
-          ("pt" "Protocol todo" entry
-           (file "gtd/inbox.org")
-           "* TODO %:description"
-           :immediate-finish t)
-          ("t" "Todo" entry
-           (file "gtd/inbox.org")
+        '(("t" "Todo" entry
+           (file "inbox.org")
            "* TODO %?")))
   (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
@@ -50,10 +45,7 @@
                                        (todo "NEXT"
                                              ((org-agenda-overriding-header "Next actions")
                                               (org-agenda-files '(,(expand-file-name "inbox.org" org-directory)))
-                                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
-                                       (todo "NEXT"
-                                             ((org-agenda-overriding-header "Reading list")
-                                              (org-agenda-files '(,(expand-file-name "private_reading_inbox.org" org-directory))))))))))
+                                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))))))
 
 (after! deft
   :config

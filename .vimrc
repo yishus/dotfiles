@@ -31,6 +31,12 @@ let g:mapleader = "\<Space>"
 nnoremap <silent> <leader> :<c-u>WhichKey 'SPC'<CR>
 
 let g:which_key_map =  {}
-let g:which_key_map['.'] = [':Files', 'Find file']
+let g:which_key_map['.'] = [':Files', 'Find project files']
+let g:which_key_map['/'] = [':Files', 'Find project files']
+
+let g:which_key_map['p'] = {
+      \ 'name' : 'Projects',
+      \ 'f' : [':Rg', 'Find project files'],
+}
 
 call which_key#register('SPC', "g:which_key_map")

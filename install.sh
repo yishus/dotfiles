@@ -12,3 +12,7 @@ if [ $SPIN ]; then
   sudo apt install -y ripgrep
   sudo apt install -y neovim
 fi
+
+CONFIGPATH="${HOME}/.config"
+
+ln -s "$SCRIPTPATH"/nvim "$CONFIGPATH"/nvim
