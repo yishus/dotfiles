@@ -1,1 +1,1 @@
-require('yishus')
+require('core')

@@ -6,6 +6,7 @@ wk.register({
     name = "file", -- optional group name
     p = { "<cmd>Telescope live_grep<cr>", "Search File" }, -- create a binding with label
     r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+    d = { "<cmd>Neotree<cr>", "Open directory" }
   },
   b = {
     name = "buffer",
@@ -16,5 +17,7 @@ wk.register({
   w = {
     name = "window",
     v = { "<c-w>v", "Vertically split windows" },
-  }
+    w = { "<c-w>p", "Switch to other window" },
+    d = { "<c-w>c", "Delete window" }
+  } 
 }, { prefix = "<leader>" })
