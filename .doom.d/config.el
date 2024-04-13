@@ -2,7 +2,7 @@
 
 (setq user-full-name "Yishu See"
       user-mail-address "yishuyishu@gmail.com"
-      doom-font (font-spec :family "JetBrains Mono" :size 15))
+      doom-font (font-spec :family "JetBrains Mono" :size 16))
 
 ;;; When starting up, maximize the window
 (when IS-MAC
@@ -11,11 +11,11 @@
         :n [s-down] #'end-of-buffer)
   (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
-(setq doom-theme 'doom-ayu-mirage)
+(setq doom-theme 'doom-nord-aurora)
 (setq org-directory (file-truename "~/.org/"))
 (setq display-line-numbers-type t)
 
-(when (featurep! :tools lsp)
+(when (modulep! :tools lsp)
   (setq lsp-enable-file-watchers nil)
   (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
   (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil))
@@ -31,8 +31,9 @@
            (file "inbox.org")
            "* TODO %?")))
   (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")
+          (sequence "IDEA(i)" "|" "PARKING(p)" "Archived(a@/!)")))
   (setq org-archive-location "archive.org::datetree/"))
 
 (after! org-agenda
@@ -44,7 +45,6 @@
                                                 (org-deadline-warning-days 365)))
                                        (todo "NEXT"
                                              ((org-agenda-overriding-header "Next actions")
-                                              (org-agenda-files '(,(expand-file-name "inbox.org" org-directory)))
                                               (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))))))
 
 (after! deft
@@ -54,8 +54,19 @@
 (after! org-roam
   :init
   (setq org-roam-directory org-directory)
-  (setq org-roam-db-location "~/Documents/org/org-roam.db"))
+  (setq org-roam-db-location "~/Documents/org/org-roam.db")
+  (setq org-roam-dailies-directory "logs/"))
 
-(use-package! apheleia
+(after! org-journal
   :config
-  (apheleia-global-mode t))
+  (setq org-journal-dir (expand-file-name "journal/" org-directory))
+  (setq org-journal-file-type 'monthly)
+  (setq org-journal-file-format "%Y%m.org"))
+
+(use-package! copilot
+  :config
+  :hook (prog-mode . copilot-mode))
+
+(map! :after evil
+      :map copilot-completion-map
+      "<tab>" #'copilot-accept-completion)
