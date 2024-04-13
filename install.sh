@@ -14,5 +14,9 @@ if [ $SPIN ]; then
 fi
 
 CONFIGPATH="${HOME}/.config"
+NVIMDATAPATH="${HOME}/.local/share/nvim"
+
+mkdir -p "$NVIMDATAPATH"/lazy
 
 ln -s "$SCRIPTPATH"/nvim "$CONFIGPATH"/nvim
+ln -s "$SCRIPTPATH"/submodules/lazy.nvim "$NVIMDATAPATH"/lazy/lazy.nvim

@@ -15,7 +15,7 @@ require("lazy").setup({
     end,
   },
   {
-    "nvim-telescope/telescope.nvim", tag = "0.1.1",
+    "nvim-telescope/telescope.nvim", tag = "0.1.6",
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   "sam4llis/nvim-tundra"
