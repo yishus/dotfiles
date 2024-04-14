@@ -1,7 +1,10 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
-  { "folke/lazy.nvim", enabled = false },
+  {
+    "folke/lazy.nvim",
+    enabled = false
+  },
   { "rebelot/kanagawa.nvim" },
   {
     "folke/which-key.nvim",
@@ -14,18 +17,19 @@ require("lazy").setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
-    }
+    },
   },
   {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("lualine").setup()
-    end
+    end,
   },
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.6',
-    dependencies = { 'nvim-lua/plenary.nvim' }
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.6",
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -35,39 +39,43 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    }
+    },
   },
-  { 'echasnovski/mini.pairs',
+  {
+    "echasnovski/mini.pairs",
     version = false,
     config = function()
       require("mini.pairs").setup()
-    end
+    end,
   },
   {
-    'echasnovski/mini.comment',
+    "echasnovski/mini.comment",
     version = false,
     config = function()
-      require('mini.comment').setup()
-    end
+      require("mini.comment").setup()
+    end,
   },
-  { "williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
-    end
+    end,
   },
-  { "williamboman/mason-lspconfig.nvim",
+  {
+    "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup()
-    end
+    end,
   },
-  { "neovim/nvim-lspconfig",
+  {
+    "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      require("lspconfig").lua_ls.setup {}
-    end
+      require("lspconfig").lua_ls.setup()
+    end,
   },
   {
     "L3MON4D3/LuaSnip",
@@ -83,18 +91,18 @@ require("lazy").setup({
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      cmp.setup {
+      cmp.setup({
         snippet = {
           -- REQUIRED - you must specify a snippet engine
           expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
           end,
         },
         sources = {
-          { name = 'nvim_lsp' }
+          { name = "nvim_lsp" },
         },
         mapping = {
-          ['<CR>'] = cmp.mapping(function(fallback)
+          ["<CR>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if luasnip.expandable() then
                 luasnip.expand()
@@ -116,9 +124,9 @@ require("lazy").setup({
               fallback()
             end
           end, { "i", "s" }),
-        }
-      }
-    end
+        },
+      })
+    end,
   },
   {
     "NeogitOrg/neogit",
@@ -127,6 +135,31 @@ require("lazy").setup({
       "sindrets/diffview.nvim",        -- optional - Diff integration
       "nvim-telescope/telescope.nvim", -- optional
     },
-    config = true
-  }
+    config = true,
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup({
+        current_line_blame = true,
+      })
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          javascript = { { "prettierd", "prettier" } },
+        },
+        format_on_save = function(bufnr)
+          -- Disable with a global or buffer-local variable
+          if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+            return
+          end
+          return { timeout_ms = 500, lsp_fallback = true }
+        end,
+      })
+    end,
+  },
 })

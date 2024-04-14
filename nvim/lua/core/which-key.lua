@@ -23,5 +23,13 @@ wk.register({
   q = {
     name = "quit",
     q = { "<cmd>qa<cr>", "Quit all" }
+  },
+  g = {
+    name = "git",
+    g = { "<cmd>Neogit<cr>", "Neogit" }
+  },
+  o = {
+    name = "open",
+    m = { "<cmd>Mason<cr>", "Mason" }
   }
 }, { prefix = "<leader>" })
