@@ -64,7 +64,7 @@ require("lazy").setup({
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup()
+      require("mason-lspconfig").setup {}
     end,
   },
   {
@@ -74,7 +74,7 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      require("lspconfig").lua_ls.setup()
+      require("lspconfig").lua_ls.setup {}
     end,
   },
   {
@@ -135,7 +135,23 @@ require("lazy").setup({
       "sindrets/diffview.nvim",        -- optional - Diff integration
       "nvim-telescope/telescope.nvim", -- optional
     },
-    config = true,
+    config = function()
+      local neogit = require("neogit")
+
+      neogit.setup {
+        signs = {
+          -- { CLOSED, OPENED }
+          item = { "▶", "⏷" },
+          section = { "▶", "⏷" },
+        },
+        mappings = {
+          popup = {
+            ["p"] = "PushPopup",
+            ["F"] = "PullPopup",
+          }
+        }
+      }
+    end,
   },
   {
     "lewis6991/gitsigns.nvim",
