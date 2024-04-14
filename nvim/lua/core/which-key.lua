@@ -19,5 +19,9 @@ wk.register({
     v = { "<c-w>v", "Vertically split windows" },
     w = { "<c-w>p", "Switch to other window" },
     d = { "<c-w>c", "Delete window" }
-  } 
+  },
+  q = {
+    name = "quit",
+    q = { "<cmd>qa<cr>", "Quit all" }
+  }
 }, { prefix = "<leader>" })

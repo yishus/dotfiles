@@ -43,6 +43,13 @@ require("lazy").setup({
       require("mini.pairs").setup()
     end
   },
+  {
+    'echasnovski/mini.comment',
+    version = false,
+    config = function()
+      require('mini.comment').setup()
+    end
+  },
   { "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
@@ -63,6 +70,10 @@ require("lazy").setup({
     end
   },
   {
+    "L3MON4D3/LuaSnip",
+    version = "v2.*",
+  },
+  {
     "hrsh7th/nvim-cmp",
     version = false, -- last release is way too old
     event = "InsertEnter",
@@ -71,24 +82,51 @@ require("lazy").setup({
     },
     config = function()
       local cmp = require("cmp")
+      local luasnip = require("luasnip")
       cmp.setup {
+        snippet = {
+          -- REQUIRED - you must specify a snippet engine
+          expand = function(args)
+            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+          end,
+        },
         sources = {
           { name = 'nvim_lsp' }
         },
         mapping = {
-          ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          },
-          ["<Tab>"] = cmp.mapping(function(fallback)
+          ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_next_item()
+              if luasnip.expandable() then
+                luasnip.expand()
+              else
+                cmp.confirm({
+                  select = true,
+                })
+              end
             else
               fallback()
             end
-          end, {"i"})
+          end),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.locally_jumpable(1) then
+              luasnip.jump(1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }
       }
     end
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+      "nvim-telescope/telescope.nvim", -- optional
+    },
+    config = true
   }
 })
