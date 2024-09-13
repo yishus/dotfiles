@@ -74,7 +74,23 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      require("lspconfig").lua_ls.setup {}
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup {}
+      lspconfig.tsserver.setup {}
+      lspconfig.sorbet.setup {}
+      lspconfig.rubocop.setup {}
+      lspconfig.ruby_lsp.setup {}
+
+      local keymap = vim.keymap
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          local opts = { buffer = ev.buf, silent = true }
+
+          opts.desc = "Show LSP definitions"
+          keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+        end,
+      })
     end,
   },
   {
@@ -167,6 +183,8 @@ require("lazy").setup({
       require("conform").setup({
         formatters_by_ft = {
           javascript = { { "prettierd", "prettier" } },
+          typescript = { { "prettierd", "prettier" } },
+          typescriptreact = { { "prettierd", "prettier" } },
         },
         format_on_save = function(bufnr)
           -- Disable with a global or buffer-local variable

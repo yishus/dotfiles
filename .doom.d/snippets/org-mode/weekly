@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: weekly
+# uuid:
+# key: weekly
+# condition: t
+# --
+Dates
+* Pre Week
+* Tasks
+* Work
+* Goals
+
+-----
+* Monday
+* Tuesday
+* Wednesday
+* Thursday
+* Friday
+* Saturday
+* Sunday
+
+-----
+* Score
+* Notes for next week
+
+-----
+* Task
