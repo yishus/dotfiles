@@ -8,15 +8,12 @@ require("lazy").setup({
   { "rebelot/kanagawa.nvim" },
   {
     "folke/which-key.nvim",
+    tag = "v3.13.2",
     event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
+      icons = {
+        mappings = false,
+      }
     },
   },
   {
@@ -28,7 +25,7 @@ require("lazy").setup({
   },
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.6",
+    tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
@@ -76,17 +73,17 @@ require("lazy").setup({
     config = function()
       local lspconfig = require("lspconfig")
       lspconfig.lua_ls.setup {}
-      lspconfig.tsserver.setup {}
+      lspconfig.ts_ls.setup {}
       lspconfig.sorbet.setup {}
       lspconfig.rubocop.setup {}
       lspconfig.ruby_lsp.setup {}
-
+  
       local keymap = vim.keymap
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
           local opts = { buffer = ev.buf, silent = true }
-
+  
           opts.desc = "Show LSP definitions"
           keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
         end,
@@ -153,7 +150,7 @@ require("lazy").setup({
     },
     config = function()
       local neogit = require("neogit")
-
+  
       neogit.setup {
         signs = {
           -- { CLOSED, OPENED }

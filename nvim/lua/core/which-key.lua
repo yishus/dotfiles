@@ -1,35 +1,23 @@
 local wk = require("which-key")
-wk.register({
- ["."] = { "<cmd>Telescope find_files<cr>", "Find File" },
-  ["/"] = { "<cmd>Telescope live_grep<cr>", "Search File" },
-  f = {
-    name = "file", -- optional group name
-    p = { "<cmd>Telescope live_grep<cr>", "Search File" }, -- create a binding with label
-    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-    d = { "<cmd>Neotree<cr>", "Open directory" }
-  },
-  b = {
-    name = "buffer",
-    ["["] = { "<cmd>bp<cr>", "Previous buffer" },
-    ["]"] = { "<cmd>bn<cr>", "Next buffer" },
-    i = { "<cmd>Telescope buffers<cr>", "All buffers" },
-  },
-  w = {
-    name = "window",
-    v = { "<c-w>v", "Vertically split windows" },
-    w = { "<c-w>p", "Switch to other window" },
-    d = { "<c-w>c", "Delete window" }
-  },
-  q = {
-    name = "quit",
-    q = { "<cmd>qa<cr>", "Quit all" }
-  },
-  g = {
-    name = "git",
-    g = { "<cmd>Neogit<cr>", "Neogit" }
-  },
-  o = {
-    name = "open",
-    m = { "<cmd>Mason<cr>", "Mason" }
-  }
-}, { prefix = "<leader>" })
+wk.add({
+  { "<leader>.",  "<cmd>Telescope find_files<cr>", desc = "Find File" },
+  { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Search File" },
+  { "<leader>f",  group = "file" },
+  { "<leader>fp", "<cmd>Telescope live_grep<cr>", desc = "Search File", mode = "n" },
+  { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File", mode = "n" },
+  { "<leader>fd", "<cmd>Neotree<cr>", desc = "Open directory", mode = "n" },
+  { "<leader>b",  group = "buffer" },
+  { "<leader>bi", "<cmd>Telescope buffers<cr>", desc = "All buffers", mode = "n" },
+  { "<leader>b[", "<cmd>bp<cr>", desc = "Previous buffer", mode = "n" },
+  { "<leader>b]", "<cmd>bn<cr>", desc = "Next buffer", mode = "n" },
+  { "<leader>w",  group = "window" },
+  { "<leader>wv", "<c-w>v", desc = "Vertically split windows", mode = "n" },
+  { "<leader>ww", "<c-w>p", desc = "Switch to other window", mode = "n" },
+  { "<leader>wd", "<c-p>c", desc = "Delete window", mode = "n" },
+  { "<leader>q",  group = "quit" },
+  { "<leader>qq", "<cmd>qa<cr>", desc = "Quit all", mode = "n" },
+  { "<leader>g",  group = "git" },
+  { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit", mode = "n" },
+  { "<leader>o",  group = "open" },
+  { "<leader>om", "<cmd>Mason<cr>", desc = "Mason", mode = "n" },
+})
