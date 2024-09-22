@@ -26,7 +26,14 @@ require("lazy").setup({
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.8",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim"
+    },
+    config = function()
+      local telescope = require("telescope")
+      telescope.load_extension("live_grep_args")
+    end
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -77,13 +84,14 @@ require("lazy").setup({
       lspconfig.sorbet.setup {}
       lspconfig.rubocop.setup {}
       lspconfig.ruby_lsp.setup {}
-  
+      lspconfig.rust_analyzer.setup {}
+
       local keymap = vim.keymap
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
           local opts = { buffer = ev.buf, silent = true }
-  
+
           opts.desc = "Show LSP definitions"
           keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
         end,
@@ -150,7 +158,7 @@ require("lazy").setup({
     },
     config = function()
       local neogit = require("neogit")
-  
+
       neogit.setup {
         signs = {
           -- { CLOSED, OPENED }
